@@ -5,15 +5,13 @@
 export LESS=-X
 if [[ "$TERM" == "xterm" ]] ; then export XTERM=xterm-color; fi
 
+# GIT SUPPORT: See http://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
 autoload -Uz compinit && compinit
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-# RPROMPT=\$vcs_info_msg_0_
-# PROMPT=\$vcs_info_msg_0_'%# '
 zstyle ':vcs_info:git:*' formats ' %b'
-# zstyle ':vcs_info:git:*' formats " %{$fg[grey]%}%s %{$reset_color%}%r/%S%{$fg[grey]%} %{$fg[blue]%}%b%{$reset_color%}%m%u%c%{$reset_color%} "
 
 case "$TERM" in
   *xterm*|rxvt*|gnome-terminal|*onsole|zvt|(dt|k|E|z)term)
