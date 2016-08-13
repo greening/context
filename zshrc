@@ -5,16 +5,23 @@
 export LESS=-X
 if [[ "$TERM" == "xterm" ]] ; then export XTERM=xterm-color; fi
 
-source ~/share/git-completion.bash
-source ~/share/git-prompt.sh
+autoload -Uz compinit && compinit
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+# RPROMPT=\$vcs_info_msg_0_
+# PROMPT=\$vcs_info_msg_0_'%# '
+zstyle ':vcs_info:git:*' formats ' %b'
+# zstyle ':vcs_info:git:*' formats " %{$fg[grey]%}%s %{$reset_color%}%r/%S%{$fg[grey]%} %{$fg[blue]%}%b%{$reset_color%}%m%u%c%{$reset_color%} "
 
 case "$TERM" in
   *xterm*|rxvt*|gnome-terminal|*onsole|zvt|(dt|k|E|z)term)
-    export PS1="%U%n %2. $(__git_ps1 '%s')%u %{]2;%n %m %2.%}"
+    export PS1="%U%n %2.\$vcs_info_msg_0_%u %{]2;%n %m %2.%}"
 #        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
     ;;
   *)
-    export PS1="%U%n %2. $(__git_ps1 '%s')%u "
+    export PS1="%U%n %2.\$vcs_info_msg_0_%s')%u "
     ;;
   esac
 
