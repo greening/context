@@ -2,24 +2,25 @@
 # Script order: /etc/zshenv ~/.zshenv [login: /etc/zprofile ~/.zprofile]
 #           [interactive: /etc/zshrc ~/.zshrc] [login: /etc/zlogin ~/.zlogin]
 
-export LESS=-X
+export LESS=eFRX
 if [[ "$TERM" == "xterm" ]] ; then export XTERM=xterm-color; fi
 
 # GIT SUPPORT: See http://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -D
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats ' %b'
+setopt auto_cd
+cdpath=($HOME/dev/tpg)
 
 case "$TERM" in
   *xterm*|rxvt*|gnome-terminal|*onsole|zvt|(dt|k|E|z)term)
     export PS1="%U%n %2.\$vcs_info_msg_0_%u %{]2;%n %m %2.%}"
-#        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
     ;;
   *)
-    export PS1="%U%n %2.\$vcs_info_msg_0_%s')%u "
+    export PS1="%U%n %2.\$vcs_info_msg_0_%u "
     ;;
   esac
 
@@ -42,3 +43,14 @@ export HISTSIZE=500
 export SAVEHIST=500
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /usr/local/share/google-cloud-sdk/path.zsh.inc ]; then
+  source '/usr/local/share/google-cloud-sdk/path.zsh.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f /usr/local/share/google-cloud-sdk/completion.zsh.inc ]; then
+  source '/usr/local/share/google-cloud-sdk/completion.zsh.inc'
+fi
