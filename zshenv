@@ -23,7 +23,7 @@ if [ $SYSTEM = "Darwin" ] ; then
     export INFOPATH=/opt/local/share/info:/sw/share/info:/usr/local/share/info:$INFOPATH
     export LD_LIBRARY_PATH=/usr/local/lib${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
     if [ "$JAVA_VERSION" = "" ] ; then
-        export JAVA_VERSION=1.8
+        export JAVA_VERSION=13
         fi
     export JAVA_HOME=`/usr/libexec/java_home -v ${JAVA_VERSION}`
     export TOMCAT_HOME=/Library/Tomcat
